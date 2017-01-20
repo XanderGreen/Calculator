@@ -3,8 +3,6 @@ from Tkinter import *
 import tkMessageBox
 import math
 
-x = input
-
 class Calc(): #making it simpler :)
     def __init__(self): #how the numbers are entered - starts off with 0
         self.total = 0
@@ -13,8 +11,8 @@ class Calc(): #making it simpler :)
         self.op_pending = False
         self.op = ""
         self.eq = False
-
-
+        #self.myAttr = __float__
+        
     def num_press(self, num): #coding for button presses
         self.eq = False
         temp = text_box.get()
@@ -53,6 +51,24 @@ class Calc(): #making it simpler :)
         self.new_num = True
         self.op_pending = False
         self.display(self.total)
+        
+    def do_pow(self):
+        self.current = float(self.current)
+        self.current = math.pow(self.current,2.0)
+        self.total = self.current
+        self.display(self.total)
+        
+    def do_sqrt(self):
+        self.current = float(self.current)
+        self.current = math.sqrt(self.current)
+        self.total = self.current
+        self.display(self.total)
+        
+    def do_pi(self):
+        self.current = math.pi
+        self.current = float(self.current)
+        self.total = self.current
+        self.display(self.total)
 
     def operation(self, op): #different operations
         self.current = float(self.current)
@@ -80,6 +96,8 @@ class Calc(): #making it simpler :)
         self.current = -(float(text_box.get()))
         self.display(self.current)
         
+x = int
+        
 sum1 = Calc()
 root = Tk()
 calc = Frame(root)
@@ -101,7 +119,7 @@ for j in range(1,4): #builds buttons automatically :D
         bttn[i].config(bg="sky blue")
         bttn[i]["command"] = lambda x = numbers[i]: sum1.num_press(x)
         i += 1
-
+        
 bttn_0 = Button(calc, text = "0")
 bttn_0["command"] = lambda: sum1.num_press(0)
 bttn_0.grid(row = 4, column = 0, sticky=EW, columnspan=2)
@@ -153,18 +171,18 @@ equals.grid(row = 5, column = 3, sticky=EW)
 equals.config(bg="dodger blue")
 
 pi = Button(calc, text = "π")
-pi["command"] = math.pi
+pi["command"] = sum1.do_pi
 pi.grid(row = 1, column = 4, sticky=EW)
 pi.config(bg="deep sky blue")
 
 sqrt = Button(calc, text = "√")
-sqrt["command"] = math.sqrt
+sqrt["command"] = sum1.do_sqrt
 sqrt.grid(row = 4, column = 4, sticky=EW)
 sqrt.config(bg="deep sky blue")
 
 squared = Button(calc, text = "x²")
-squared["command"] = math.pow(x,2.0)
+squared["command"] = sum1.do_pow
 squared.grid(row = 2, column = 4, sticky=EW)
-squared.congif(bg="deep sky blue")
+squared.config(bg="deep sky blue")
 
 root.mainloop()
