@@ -108,11 +108,29 @@ class Calc(): #making it simpler :)
         self.current = -(float(text_box.get()))
         self.display(self.current)
         
+def openfileR():
+    text_box.delete(0, END)
+    f = open("ReadMe.txt", 'r')
+    for line in f:
+        answer = line[0:-1]
+        text_box.insert(0, END)
+
+def openfileW():
+    f = open("ReadMe.txt", 'w')
+    answer = text_box.get(0, END)
+    for i in answer:
+        f.write(i="\n")
+    f.close()
+    
+def copy(self):
+        self.clipboard_clear()
+        text_box = self.get()
+        self.clipboard_append(text)
+
+root = Tk()
 x = int
- 
 top = Tk()      
 sum1 = Calc()
-root = Tk()
 calc = Frame(root)
 calc.grid()
 
@@ -122,11 +140,6 @@ text_box = Entry(calc, justify=RIGHT)
 text_box.grid(row = 2, column = 0, columnspan = 5, sticky=EW)
 text_box.insert(0, "0")
 text_box.config(bg="black", foreground="white")
-
-mb=  Menubutton (top, text="File", relief=RAISED )
-mb.grid(row=0, column=0, columnspan=4, sticky=EW)
-mb.menu  =  Menu (mb, tearoff = 0)
-mb["menu"]  =  mb.menu
 
 numbers = "789456123"
 i = 0
@@ -213,5 +226,18 @@ pi = Button(calc, text = "π")
 pi["command"] = sum1.do_pi
 pi.grid(row = 7, column = 4, sticky=EW)
 pi.config(bg="deep sky blue")
+
+menu = Menu(root)
+root.config(menu=menu)
+filemenu = Menu(menu)
+menu.add_cascade(label="File", menu=filemenu)
+filemenu.add_command(label="New", command=openfileR)
+filemenu.add_command(label="Open...", command=openfileW)
+filemenu.add_separator()
+
+editmenu = Menu(menu)
+menu.add_cascade(label="Edit", menu=editmenu)
+editmenu.add_command(label="Exit", command=root.quit)
+editmenu.add_command(label="Copy", command=copy)
 
 root.mainloop()
