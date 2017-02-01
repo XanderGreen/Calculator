@@ -108,21 +108,20 @@ class Calc(): #making it simpler :)
         self.current = -(float(text_box.get()))
         self.display(self.current)
         
-def openfileR():
-    text_box.delete(0, END)
-    f = open("ReadMe.txt", 'r')
-    for line in f:
-        answer = line[0:-1]
-        text_box.insert(0, END)
-
-def openfileW():
-    f = open("ReadMe.txt", 'w')
-    answer = text_box.get(0, END)
-    for i in answer:
-        f.write(i="\n")
-    f.close()
+    def save(self):
+        self.current = text_box
+        contents = self.textbox.get(1.0,"end-1c")                                    
+        with open(self.f, 'Readme.txt') as outputFile:  
+            outputFile.write(contents)
+            
+    def openfileW():
+        f = open("ReadMe.txt", 'w')
+        answer = text_box.get(0, END)
+        for i in answer:
+            f.write(i="\n")
+        f.close()
     
-def copy(self):
+    def copy(self):
         self.clipboard_clear()
         text_box = self.get()
         self.clipboard_append(text)
@@ -231,13 +230,13 @@ menu = Menu(root)
 root.config(menu=menu)
 filemenu = Menu(menu)
 menu.add_cascade(label="File", menu=filemenu)
-filemenu.add_command(label="New", command=openfileR)
-filemenu.add_command(label="Open...", command=openfileW)
+filemenu.add_command(label="Save", command=sum1.save)
+filemenu.add_command(label="Open...", command=sum1.openfileW)
 filemenu.add_separator()
 
 editmenu = Menu(menu)
 menu.add_cascade(label="Edit", menu=editmenu)
 editmenu.add_command(label="Exit", command=root.quit)
-editmenu.add_command(label="Copy", command=copy)
+editmenu.add_command(label="Copy", command=sum1.copy)
 
 root.mainloop()
