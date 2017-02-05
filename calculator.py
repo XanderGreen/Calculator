@@ -3,6 +3,7 @@ from Tkinter import *
 import tkMessageBox
 import Tkinter
 import math
+import os
 
 class Calc(): #making it simpler :)
     def __init__(self): #how the numbers are entered - starts off with 0
@@ -109,26 +110,27 @@ class Calc(): #making it simpler :)
         self.display(self.current)
         
     def save(self):
-        self.current = text_box
-        contents = self.textbox.get(1.0,"end-1c")                                    
-        with open(self.f, 'Readme.txt') as outputFile:  
-            outputFile.write(contents)
-            
-    def openfileW():
+        text_box = self.total
+        print text_box
         f = open("ReadMe.txt", 'w')
-        answer = text_box.get(0, END)
-        for i in answer:
-            f.write(i="\n")
+        total = str(text_box)
+        f.write(total)
         f.close()
-    
-    def copy(self):
-        self.clipboard_clear()
-        text_box = self.get()
-        self.clipboard_append(text)
+
+    def openfileW(self):
+        f = open("ReadMe.txt", 'r')
+        answer = f.read()
+        self.current = answer
+        text_box.delete(0,END)
+        text_box.insert(END, float(answer))
+        f.close()
+        
+    def addToClipBoard(self):
+        command = 'echo ' + text_box.get() + '| clip'
+        os.system(command)
 
 root = Tk()
-x = int
-top = Tk()      
+x = int      
 sum1 = Calc()
 calc = Frame(root)
 calc.grid()
@@ -236,7 +238,7 @@ filemenu.add_separator()
 
 editmenu = Menu(menu)
 menu.add_cascade(label="Edit", menu=editmenu)
-editmenu.add_command(label="Exit", command=root.quit)
-editmenu.add_command(label="Copy", command=sum1.copy)
-
+editmenu.add_command(label="Exit", command=root.destroy)
+editmenu.add_command(label="Copy", command=sum1.addToClipBoard)
+                
 root.mainloop()
